@@ -5,6 +5,7 @@ from random import shuffle
 from shutil import rmtree
 import argparse
 from create_silence import create_silence_from_folder, create_silence_from_list_of_files
+from config import TYPES
 
 
 if sys.platform == "linux" or sys.platform == "linux2":
@@ -20,7 +21,7 @@ def generate_from_list_of_files(list_of_files, l2, output='Accent', rm_silence=T
     isB = False
     isA = False
     is_en = False
-    if output == 'B' or output == 'Accent' or output == 'Grammar': isB = True
+    if output == 'B' or output in TYPES: isB = True
     elif output == 'A': isA = True
     else: is_en = True
     if not os.path.exists('output' + output):
@@ -43,7 +44,6 @@ def generate_from_list_of_files(list_of_files, l2, output='Accent', rm_silence=T
             file_type = [fe, se]
             set_type = True
         output_name = './output' + output + '/' + fe.split('/')[-1][:-6] + output + fe[-4:]
-        print (output_name)
         if not os.path.exists(output_name):
             subprocess.call([sox,] + file_type + [output_name,])
     if rm_silence:

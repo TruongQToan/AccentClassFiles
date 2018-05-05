@@ -14,10 +14,10 @@ if __name__ == '__main__':
     parser.add_argument("--shuffled", '-s', nargs=1, required=False)
     args = parser.parse_args()
     to_mp3 = not (args.to_mp3 is None)
-    artist = 'Accent'
-    album = 'Accent Training'
+    artist = 'Grammar'
+    album = 'Grammar Training'
     if to_mp3 and len(args.to_mp3) == 2:
         artist = args.to_mp3[0]
         album = args.to_mp3[1]
     create_accent_grammar(args.list_of_tracks, args.num_files_per_group,
-        args.num_plays, args.num_copies, args.name[0], to_mp3, artist, album, args.shuffled[0], args.padding[0], True)
+        args.num_plays, args.num_copies, args.name[0], to_mp3, artist, album, args.shuffled[0], args.padding[0])

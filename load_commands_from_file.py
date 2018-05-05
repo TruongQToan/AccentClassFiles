@@ -38,7 +38,7 @@ if __name__ == "__main__":
             if not to_mp3 == '': list_of_args.append(to_mp3)
             if not type_output == '': list_of_args.append(type_output)
             subprocess.call(list_of_args)
-        elif cmd == "mixaccent.py" or cmd == "mixgrammar.py":
+        elif cmd == "mixaccent.py" or cmd == "mixgrammar.py" or cmd == "mixextra.py":
             list_of_args = ["python3", cmd,
                 num_files_per_group,
                 num_plays,
@@ -51,11 +51,8 @@ if __name__ == "__main__":
             if not to_mp3 == '': list_of_args.append(to_mp3)
             subprocess.call(list_of_args)
         elif cmd == "overviewglossika.py":
-            #print ("LIST OF TRACKS " + str(list_of_tracks))
             start = list_of_tracks.split('-')[0]
-            #print ("START " + str(start))
             end = list_of_tracks.split('-')[1]
-            #print ("END " + str(end))
             list_of_args = ["python3", "overviewglossika.py",
                 start, end,
                 '-f', num_files_per_group,

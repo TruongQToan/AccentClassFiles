@@ -27,7 +27,7 @@ def create_silence_from_file(input_file, output_file, silence_padding='0'):
     new_output = output_file[:-4] + '-p' + silence_padding + output_file[-4:]
     subprocess.call([sox, '-n', '-r', '44100', '-c', '1', 'temp_silence.wav', 'trim', '0.0', str(float(silence_padding) / 1000.0)])
     subprocess.call([sox, output_file, 'temp_silence.wav', new_output])
-    #subprocess.call(['rm', '-f', 'temp_silence.wav', output_file])
+    subprocess.call(['rm', '-f', 'temp_silence.wav', output_file])
 
 
 def create_silence_from_folder(input_folder, output_folder, silence_padding='0'):
