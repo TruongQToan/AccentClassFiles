@@ -98,6 +98,10 @@ def print_log(log, log_tracks, list_of_files):
 
 
 def get_name(output_folder, prefix, num_plays, silence_padding='0'):
+    if (int(silence_padding) >= 10000):
+        silence_padding = '%05d' % (int(silence_padding))
+    else:
+        silence_padding = '%04d' % (int(silence_padding))
     name_id = 1
     name = './' + output_folder + '/' + prefix + '_' + '%1ds-%1d' % (num_plays, name_id) + '-p' + silence_padding + '.wav'
     max_id = None
