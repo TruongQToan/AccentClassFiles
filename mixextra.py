@@ -3,7 +3,7 @@ from mixtracks import create_accent_grammar
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Make Extra files from a list of track")
+    parser = argparse.ArgumentParser(description="Make Extra files from a list of tracks")
     parser.add_argument('num_files_per_group', type=int)
     parser.add_argument('num_plays', type=int)
     parser.add_argument('num_copies', type=int)

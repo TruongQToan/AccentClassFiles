@@ -1,7 +1,7 @@
 import xlrd
 import sys
 import subprocess
-
+from config import COMMANDS
 
 def encode(s):
     if isinstance(s, float) or isinstance(s, int):
@@ -38,7 +38,7 @@ if __name__ == "__main__":
             if not to_mp3 == '': list_of_args.append(to_mp3)
             if not type_output == '': list_of_args.append(type_output)
             subprocess.call(list_of_args)
-        elif cmd == "mixaccent.py" or cmd == "mixgrammar.py" or cmd == "mixextra.py":
+        elif cmd in COMMANDS:
             list_of_args = ["python3", cmd,
                 num_files_per_group,
                 num_plays,

@@ -13,19 +13,25 @@ if sys.platform == "linux" or sys.platform == "linux2":
 else:
     sox = '/usr/local/bin/sox'
 
+def check(output):
+    if output == '': return False
+    for s in output.split('_'):
+        if s == '': continue
+        if not s in TYPES:
+            return False
+    return True
 
-def generate_from_list_of_files(list_of_files, l2, output='Accent', rm_silence=True, silence_padding='0'):
-    if l2[-1] != '/': l2 = l2 + '/'
-    files_vn = [l2 + f.split('/')[-1][:-6] + 'vn.' + f.split('/')[-1][-3:] for f in list_of_files]
+def generate_from_list_of_files(list_of_files, output='', rm_silence=True, silence_padding='0'):
+    files_vn = [f.replace('EN', 'VN').replace('en.', 'vn.') for f in list_of_files]
     files_en = list_of_files[:]
     isB = False
     isA = False
     is_en = False
-    if output == 'B' or output in TYPES: isB = True
+    if output == 'B' or check(output): isB = True
     elif output == 'A': isA = True
     else: is_en = True
-    if not os.path.exists('output' + output):
-        os.makedirs('output' + output)
+    if not os.path.exists('output_' + output):
+        os.makedirs('output_' + output)
     files_vn.sort()
     files_en.sort()
     create_silence_from_list_of_files(files_en, 'outputSE', silence_padding)
@@ -43,7 +49,7 @@ def generate_from_list_of_files(list_of_files, l2, output='Accent', rm_silence=T
         elif is_en and not set_type:
             file_type = [fe, se]
             set_type = True
-        output_name = './output' + output + '/' + fe.split('/')[-1][:-6] + output + fe[-4:]
+        output_name = './output_' + output + '/' + fe.split('/')[-1][:-6] + output + fe[-4:]
         if not os.path.exists(output_name):
             subprocess.call([sox,] + file_type + [output_name,])
     if rm_silence:

@@ -7,3 +7,5 @@ GRAMMAR_EN = 'Grammar/GrammarEN'
 GLOSSIKA_OVERVIEW = './Overview(wav)/'
 OUTPUT_ALL = "OUTPUT"
 TYPES = ['Accent', 'Grammar', 'Extra']
+MAPPING = {'a': 'Accent', 'u': 'Grammar', 'x': 'Extra'}
+COMMANDS = ["mix.py", "mixaccent.py", "mixextra.py", "mixgrammar.py"]

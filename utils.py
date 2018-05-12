@@ -103,12 +103,16 @@ def get_name(output_folder, prefix, num_plays, silence_padding='0'):
     else:
         silence_padding = '%04d' % (int(silence_padding))
     name_id = 1
-    name = './' + output_folder + '/' + prefix + '_' + '%1ds-%1d' % (num_plays, name_id) + '-p' + silence_padding + '.wav'
+    if silence_padding != '0000':
+        addition_padding = '-p' + silence_padding
+    else:
+        addition_padding = ''
+    name = './' + output_folder + '/' + prefix + '_' + '%1ds-%1d' % (num_plays, name_id) + addition_padding + '.wav'
     max_id = None
     while True:
         if os.path.exists(name):
             name_id += 1
-            name = './' + output_folder + '/' + prefix + '_' + '%1ds-%1d' % (num_plays, name_id) + '-p' + silence_padding + '.wav'
+            name = './' + output_folder + '/' + prefix + '_' + '%1ds-%1d' % (num_plays, name_id) + addition_padding + '.wav'
         else: break
     return name
 
