@@ -13,6 +13,7 @@ if sys.platform == "linux" or sys.platform == "linux2":
 else:
     sox = '/usr/local/bin/sox'
 
+
 def check(output):
     if output == '': return False
     for s in output.split('_'):
@@ -20,6 +21,7 @@ def check(output):
         if not s in TYPES:
             return False
     return True
+
 
 def generate_from_list_of_files(list_of_files, output='', rm_silence=True, silence_padding='0'):
     files_vn = [f.replace('EN', 'VN').replace('en.', 'vn.') for f in list_of_files]

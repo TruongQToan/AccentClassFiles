@@ -15,12 +15,12 @@ def get_num_files(n):
 
 
 def generate_glossika(start, end, type_output='B', shuffled='', silence_padding='0'):
-    makedir('output' + type_output)
+    makedir('output_' + type_output)
     input_files = []
     for i in range(start, end + 1):
         input_files.append(GLOSSIKA_EN + 'FL-%04d-en.wav' % i)
-    generate_from_list_of_files(input_files, GLOSSIKA_VN, type_output, False, silence_padding)
-    files = ['output%s/FL-%04d-%s%s' % (type_output, i, type_output, '.wav') for i in range(start, end + 1)]
+    generate_from_list_of_files(input_files, type_output, False, silence_padding)
+    files = ['output_%s/FL-%04d-%s%s' % (type_output, i, type_output, '.wav') for i in range(start, end + 1)]
     if shuffled == 'group': shuffle(files)
     return files
 

@@ -24,7 +24,7 @@ def create_review(files, start, end, num_plays, num_files_per_group, log=False,
     artist:
     album: if toMP3=True, use these values to set meta information
     '''
-    makedir('outputB')
+    makedir('output_B')
     # if shuffled == 'all': shuffle(files)
     if num_files_per_group == 0:
         num_files_per_group = get_num_files(len(input_files))
@@ -35,7 +35,8 @@ def create_review(files, start, end, num_plays, num_files_per_group, log=False,
     for copies in range(int(num_copies)):
         result = shuffle_track(files, num_plays, num_files_per_group)
         dir_name = OUTPUT_ALL + '(wav)/' + sub_directory()
-        makedir(dir_name)
+        if not os.path.exists(dir_name):
+            makedir(dir_name)
         name = get_name(dir_name, prefix, num_plays, silence_padding)
         make_track(result, name)
         convert_mp3(to_mp3, name, dir_name.replace("wav", "mp3"), artist, album)
