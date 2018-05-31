@@ -40,7 +40,7 @@ def create_overview_en(files, start, end, to_mp3, prefix='', silence_padding='0'
 
 
 def create_overview_0(start, end, to_mp3, prefix=''):
-    result = ['outputB/FL-%04d-B%s' % (i, '.wav') for i in range(start, end + 1)]
+    result = ['output_B/FL-%04d-B%s' % (i, '.wav') for i in range(start, end + 1)]
     dir_name = OUTPUT_ALL + '(wav)/' + sub_directory()
     name = _get_name(prefix, '0', dir_name)
     makedir(dir_name)
