@@ -17,5 +17,5 @@ if __name__ == '__main__':
     if to_mp3 and len(args.to_mp3) == 2:
         artist = args.to_mp3[0]
         album = args.to_mp3[1]
-    mix(args.list_of_tracks, args.num_files_per_group, 
+    mix(args.list_of_tracks, args.num_files_per_group,
         args.num_plays, args.num_copies, args.name[0], to_mp3, args.shuffled[0], args.padding[0])

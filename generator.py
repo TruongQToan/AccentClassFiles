@@ -5,7 +5,7 @@ from random import shuffle
 from shutil import rmtree
 import argparse
 from create_silence import create_silence_from_folder, create_silence_from_list_of_files
-from config import TYPES
+from config import MAPPING
 
 
 if sys.platform == "linux" or sys.platform == "linux2":
@@ -18,7 +18,7 @@ def check(output):
     if output == '': return False
     for s in output.split('_'):
         if s == '': continue
-        if not s in TYPES:
+        if not s in MAPPING.values():
             return False
     return True
 

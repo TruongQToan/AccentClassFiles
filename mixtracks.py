@@ -3,6 +3,8 @@ import argparse
 from random import shuffle
 from shutil import rmtree
 import os
+import re
+
 from utils import shuffle_track, get_name, makedir, convert_mp3, make_track, get_num_files, sub_directory
 from music_file import MusicFile
 from convert2mp3 import convert_file_2_mp3
@@ -25,7 +27,7 @@ def get_prefix(list_of_tracks, grammar):
     return name
 
 
-def process(exceptions):
+def find_exceptions(exceptions):
     results = []
     for f in exceptions.split('.'):
         if ':' in f:
@@ -36,7 +38,18 @@ def process(exceptions):
     return results
 
 
-def find_exceptions(track):
+def get_track_numbers(s):
+    track_numbers = []
+    for f in s.split('.'):
+        if ':' in f:
+            for i in range(int(f.split(':')[0]), int(f.split(':')[1]) + 1):
+                track_numbers.append(i)
+        else:
+            track_numbers.append(int(f))
+    return track_numbers
+
+
+def get_files(track):
     add = 0
     if track.find('+') != -1:
         add = 1
@@ -44,14 +57,21 @@ def find_exceptions(track):
         add = -1
     if add == 1:
         track = track.split('+')
-        return add, int(track[0][1:]), process(track[1])
+        return add, get_track_numbers(track[0][1:]), find_exceptions(track[1])
     elif add == -1:
         track = track.split('-')
-        return add, int(track[0][1:]), process(track[1])
-    return add, int(track[1:]), []
+        return add, get_track_numbers(track[0][1:]), find_exceptions(track[1])
+    return add, get_track_numbers(track[1:]), []
 
 
 def filter_files(list_of_tracks, shuffled):
+    def check_exception(u, exceptions):
+        if len(u) > 1 and int(u[1]) in exceptions:
+            return True
+        if len(u) == 1 and int(u[0]) in exceptions:
+            return True
+        return False
+
     input_files = []
     artist = ''
     for track in list_of_tracks:
@@ -59,17 +79,16 @@ def filter_files(list_of_tracks, shuffled):
         if type_file not in artist.split('_'):
         	artist += type_file + '_'
         sub_input_files = []
-        add, track_number, exceptions = find_exceptions(track)
+        add, track_numbers, exceptions = get_files(track)
         for f in sorted(os.listdir(type_file + '/' + type_file + 'EN/')):
             if not (f[-3:] == 'mp3' or f[-3:] == 'wav'): continue
-            if type_file == 'Grammar': u = f[1:4]
-            elif type_file == 'Accent': u = f[6:9]
-            elif type_file == 'Extra': u = f[1:4]
-            if u == '%03d' % (track_number):
-                if add == 1 and int(f[f.find('-') + 1:-6]) in exceptions:
+            m = re.search(r"\d{3}(-\d{2})?", f)
+            u = m.group(0).split('-')
+            if int(u[0]) in track_numbers:
+                if add == 1 and check_exception(u, exceptions):
                     sub_input_files.append(type_file + '/' + type_file + 'EN/' + f)
                     continue
-                elif add == -1 and int(f[f.find('-') + 1:-6]) in exceptions:
+                elif add == -1 and check_exception(u, exceptions):
                     continue
                 elif add == 0 or add == -1:
                     sub_input_files.append(type_file + '/' + type_file + 'EN/' + f)
